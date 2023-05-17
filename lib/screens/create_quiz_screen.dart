@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
+import '../models/quiz_data.dart';
 import '../widgets/create_quiz_widget.dart';
 
 class CreateQuiz extends StatefulWidget {
-  const CreateQuiz({Key? key}) : super(key: key);
+  static List<Quiz> allQuestions = [
+    Quiz(
+        question: "1",
+        answer1: "1",
+        answer2: "2",
+        answer3: "3",
+        answer4: "4",
+        correctAnswer: "A")
+  ];
 
   @override
   State<CreateQuiz> createState() => _CreateQuizState();
 }
 
 class _CreateQuizState extends State<CreateQuiz> {
+  Map data = {};
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +36,21 @@ class _CreateQuizState extends State<CreateQuiz> {
             padding: const EdgeInsets.all(15.0),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pushNamed("/addquestion");
+                setState(() {
+                  Navigator.of(context).pushNamed("/addquestion").then((value) {
+                    setState(() {
+                      data = value as Map;
+
+                      CreateQuiz.allQuestions.add(Quiz(
+                          question: data["question"],
+                          answer1: data["answer1"],
+                          answer2: data["answer2"],
+                          answer3: data["answer3"],
+                          answer4: data["answer4"],
+                          correctAnswer: data["correctAnswer"]));
+                    });
+                  });
+                });
               },
               style: ButtonStyle(
                   elevation: MaterialStateProperty.all(5),
@@ -43,10 +65,7 @@ class _CreateQuizState extends State<CreateQuiz> {
               ),
             ),
           ),
-          Quiz(),
-          Quiz(),
-          Quiz(),
-          Quiz(),
+          CreatedQuizWidget(CreateQuiz.allQuestions)
         ],
       ),
     );

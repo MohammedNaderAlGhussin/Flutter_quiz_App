@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:quiz_app_advanced/material_color.dart';
 
-import '../widgets/answers_widget.dart';
-import '../widgets/question_widget.dart';
+import '../models/quiz_data.dart';
+
+import '../widgets/result_widget.dart';
 
 class Questions extends StatefulWidget {
-  const Questions({Key? key}) : super(key: key);
+  List<Quiz> allQuestions;
+
+  Questions(this.allQuestions);
 
   @override
   State<Questions> createState() => _QuestionsState();
 }
 
 class _QuestionsState extends State<Questions> {
+  int currentIndex = 0;
+  int score = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,30 +24,85 @@ class _QuestionsState extends State<Questions> {
         title: const Text("Quiz App"),
         centerTitle: true,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text(
-                "Question 1",
-                style: TextStyle(
-                    color: primary, fontSize: 25, fontWeight: FontWeight.bold),
+      body: currentIndex >= widget.allQuestions.length
+          ? Result(score)
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Question ${currentIndex + 1}",
+                      style: const TextStyle(
+                          color: primary,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      " /${widget.allQuestions.length}",
+                      style: const TextStyle(fontSize: 20, color: Colors.grey),
+                    )
+                  ],
+                ),
+                questionBuilder(widget.allQuestions[currentIndex].question),
+                answerBuilder(widget.allQuestions[currentIndex].answer1,
+                    widget.allQuestions[currentIndex].correctAnswer, "A"),
+                answerBuilder(widget.allQuestions[currentIndex].answer2,
+                    widget.allQuestions[currentIndex].correctAnswer, "B"),
+                answerBuilder(widget.allQuestions[currentIndex].answer3,
+                    widget.allQuestions[currentIndex].correctAnswer, "C"),
+                answerBuilder(widget.allQuestions[currentIndex].answer4,
+                    widget.allQuestions[currentIndex].correctAnswer, "D"),
+              ],
+            ),
+    );
+  }
+
+  Container answerBuilder(answer, correctAnswer, current) {
+    return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.only(left: 10, right: 10),
+        child: InkWell(
+          onTap: () {
+            setState(() {
+              currentIndex++;
+              if (correctAnswer == current) {
+                score += 1;
+              }
+            });
+          },
+          child: Card(
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(color: primary),
+                borderRadius: BorderRadius.circular(15),
               ),
-              Text(
-                " /10",
-                style: TextStyle(fontSize: 20, color: Colors.grey),
-              )
-            ],
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  answer,
+                  style: const TextStyle(fontSize: 20),
+                ),
+              )),
+        ));
+  }
+
+  Container questionBuilder(question) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      width: double.infinity,
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        color: primary,
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Text(
+            question ?? "",
+            style: const TextStyle(
+                fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
           ),
-          question(),
-          Answer(),
-          Answer(),
-          Answer(),
-          Answer(),
-        ],
+        ),
       ),
     );
   }

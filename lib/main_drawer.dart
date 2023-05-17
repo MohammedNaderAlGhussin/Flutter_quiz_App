@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quiz_app_advanced/material_color.dart';
 
-class forthProject extends StatelessWidget {
+class MainDrawer extends StatelessWidget {
+  const MainDrawer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -46,8 +48,8 @@ class forthProject extends StatelessWidget {
         onTap: () {
           SystemNavigator.pop();
         },
-        leading: Icon(Icons.exit_to_app),
-        title: Text(
+        leading: const Icon(Icons.exit_to_app),
+        title: const Text(
           "Exit",
           style: TextStyle(fontSize: 20),
         ),

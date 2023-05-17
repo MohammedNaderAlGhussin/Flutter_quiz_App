@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:quiz_app_advanced/material_color.dart';
+import 'package:quiz_app_advanced/screens/create_quiz_screen.dart';
 
 class Result extends StatefulWidget {
-  const Result({Key? key}) : super(key: key);
+  int? score;
+  Result(this.score);
 
   @override
   State<Result> createState() => _ResultState();
@@ -19,26 +18,32 @@ class _ResultState extends State<Result> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              "Oops!",
-              style: TextStyle(
+            Text(
+              widget.score! > (CreateQuiz.allQuestions.length / 2)
+                  ? "Congrats"
+                  : "Oops!",
+              style: const TextStyle(
                   color: primary, fontSize: 30, fontWeight: FontWeight.bold),
             ),
             Image.asset(
-              "images/fail.png",
+              widget.score! > (CreateQuiz.allQuestions.length / 2)
+                  ? "images/result.jpg"
+                  : "images/fail.png",
               width: 200,
               height: 200,
             ),
-            const Text(
-              "Your Score : 1 / 10",
-              style: TextStyle(
+            Text(
+              "Your Score : ${widget.score} / ${CreateQuiz.allQuestions.length}",
+              style: const TextStyle(
                   color: Colors.green,
                   fontWeight: FontWeight.bold,
                   fontSize: 25),
             ),
-            const Text(
-              "Sorry , better luck next time! ",
-              style: TextStyle(fontSize: 25),
+            Text(
+              widget.score! > (CreateQuiz.allQuestions.length / 2)
+                  ? "good job"
+                  : "Sorry , better luck next time!",
+              style: const TextStyle(fontSize: 25),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 15),

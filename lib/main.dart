@@ -18,17 +18,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      routes: {
-        "/home": (context) => MyHomePage(),
-        "/createquiz": (context) => CreateQuiz(),
-        "/addquestion": (context) => NewQuestion(),
-        "/questions": (context) => Questions()
-      },
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: primary),
-      home: Result(),
-    );
+        routes: {
+          "/home": (context) => const MyHomePage(),
+          "/createquiz": (context) => CreateQuiz(),
+          "/addquestion": (context) => const AddNewQuestion(),
+          "/questions": (context) => Questions(CreateQuiz.allQuestions)
+        },
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(primarySwatch: primary),
+        home: const MyHomePage());
   }
 }
 
@@ -38,7 +37,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: forthProject(),
+      drawer: const MainDrawer(),
       appBar: AppBar(
         title: const Text(
           "Quiz app",
@@ -46,28 +45,30 @@ class MyHomePage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset("images/quiz.png"),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed("/questions");
-            },
-            style: ButtonStyle(
-                fixedSize: MaterialStateProperty.all(Size(230, 80)),
-                elevation: MaterialStateProperty.all(5),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15)),
-                ),
-                padding: MaterialStateProperty.all(EdgeInsets.all(0))),
-            child: const Text(
-              "Let's Start!",
-              style: TextStyle(fontSize: 25),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset("images/quiz.png"),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed("/questions");
+              },
+              style: ButtonStyle(
+                  fixedSize: MaterialStateProperty.all(const Size(230, 80)),
+                  elevation: MaterialStateProperty.all(5),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                  ),
+                  padding: MaterialStateProperty.all(const EdgeInsets.all(0))),
+              child: const Text(
+                "Let's Start!",
+                style: TextStyle(fontSize: 25),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

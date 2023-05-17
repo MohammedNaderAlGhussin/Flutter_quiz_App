@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-class NewQuestion extends StatefulWidget {
-  const NewQuestion({Key? key}) : super(key: key);
+class AddNewQuestion extends StatefulWidget {
+  const AddNewQuestion({Key? key}) : super(key: key);
 
   @override
-  State<NewQuestion> createState() => _NewQuestionState();
+  State<AddNewQuestion> createState() => _AddNewQuestion();
 }
 
-class _NewQuestionState extends State<NewQuestion> {
+class _AddNewQuestion extends State<AddNewQuestion> {
   String dropDownValue = "A";
+  var questionController = TextEditingController();
+  var firstController = TextEditingController();
+  var secondAnswerController = TextEditingController();
+  var thirdAnswerController = TextEditingController();
+  var forthAnswerController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +30,7 @@ class _NewQuestionState extends State<NewQuestion> {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: TextField(
+              controller: questionController,
               style: const TextStyle(fontSize: 20),
               decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -36,10 +41,13 @@ class _NewQuestionState extends State<NewQuestion> {
                   prefixIcon: const Icon(Icons.question_mark)),
             ),
           ),
-          answersTextField("First Answer", "A", Colors.yellow),
-          answersTextField("Second Answer", "B", Colors.green),
-          answersTextField("Third Answer", "C", Colors.grey),
-          answersTextField("Forth Answer", "D", Colors.red),
+          answersTextField("First Answer", "A", Colors.yellow, firstController),
+          answersTextField(
+              "Second Answer", "B", Colors.green, secondAnswerController),
+          answersTextField(
+              "Third Answer", "C", Colors.grey, thirdAnswerController),
+          answersTextField(
+              "Forth Answer", "D", Colors.red, forthAnswerController),
           ListTile(
             leading: const Text(
               "Select the correct Answer",
@@ -87,7 +95,20 @@ class _NewQuestionState extends State<NewQuestion> {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Map data = {
+                  "question": questionController.text,
+                  "answer1": firstController.text,
+                  "answer2": secondAnswerController.text,
+                  "answer3": thirdAnswerController.text,
+                  "answer4": forthAnswerController.text,
+                  "correctAnswer": dropDownValue
+                };
+
+                setState(() {
+                  Navigator.of(context).pop(data);
+                });
+              },
               style: ButtonStyle(
                   elevation: MaterialStateProperty.all(5),
                   shape: MaterialStateProperty.all(
@@ -109,16 +130,17 @@ class _NewQuestionState extends State<NewQuestion> {
     );
   }
 
-  ListTile answersTextField(labelText, circleLetter, circlecolor) {
+  ListTile answersTextField(labelText, circleLetter, circlecolor, controller) {
     return ListTile(
       leading: CircleAvatar(
           backgroundColor: circlecolor,
           radius: 25,
           child: Text(
             circleLetter,
-            style: TextStyle(fontSize: 20, color: Colors.white),
+            style:const TextStyle(fontSize: 20, color: Colors.white),
           )),
       title: TextField(
+        controller: controller,
         style: const TextStyle(fontSize: 20),
         decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),

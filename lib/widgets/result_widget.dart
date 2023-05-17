@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app_advanced/material_color.dart';
-import 'package:quiz_app_advanced/screens/create_quiz_screen.dart';
+
+import '../models/quiz_data.dart';
 
 class Result extends StatefulWidget {
   int? score;
@@ -19,28 +20,28 @@ class _ResultState extends State<Result> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              widget.score! > (CreateQuiz.allQuestions.length / 2)
+              widget.score! > (Quiz.allQuestions.length / 2)
                   ? "Congrats"
                   : "Oops!",
               style: const TextStyle(
                   color: primary, fontSize: 30, fontWeight: FontWeight.bold),
             ),
             Image.asset(
-              widget.score! > (CreateQuiz.allQuestions.length / 2)
+              widget.score! > (Quiz.allQuestions.length / 2)
                   ? "images/result.jpg"
                   : "images/fail.png",
               width: 200,
               height: 200,
             ),
             Text(
-              "Your Score : ${widget.score} / ${CreateQuiz.allQuestions.length}",
+              "Your Score : ${widget.score} / ${Quiz.allQuestions.length}",
               style: const TextStyle(
                   color: Colors.green,
                   fontWeight: FontWeight.bold,
                   fontSize: 25),
             ),
             Text(
-              widget.score! > (CreateQuiz.allQuestions.length / 2)
+              widget.score! > (Quiz.allQuestions.length / 2)
                   ? "good job"
                   : "Sorry , better luck next time!",
               style: const TextStyle(fontSize: 25),

@@ -4,16 +4,6 @@ import '../models/quiz_data.dart';
 import '../widgets/create_quiz_widget.dart';
 
 class CreateQuiz extends StatefulWidget {
-  static List<Quiz> allQuestions = [
-    Quiz(
-        question: "1",
-        answer1: "1",
-        answer2: "2",
-        answer3: "3",
-        answer4: "4",
-        correctAnswer: "A")
-  ];
-
   @override
   State<CreateQuiz> createState() => _CreateQuizState();
 }
@@ -41,7 +31,7 @@ class _CreateQuizState extends State<CreateQuiz> {
                     setState(() {
                       data = value as Map;
 
-                      CreateQuiz.allQuestions.add(Quiz(
+                      Quiz.allQuestions.add(Quiz(
                           question: data["question"],
                           answer1: data["answer1"],
                           answer2: data["answer2"],
@@ -65,7 +55,7 @@ class _CreateQuizState extends State<CreateQuiz> {
               ),
             ),
           ),
-          CreatedQuizWidget(CreateQuiz.allQuestions)
+          CreatedQuizWidget()
         ],
       ),
     );

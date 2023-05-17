@@ -5,7 +5,6 @@ import 'package:quiz_app_advanced/screens/questions_screen.dart';
 
 import 'screens/create_quiz_screen.dart';
 import 'main_drawer.dart';
-import 'widgets/result_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
           "/home": (context) => const MyHomePage(),
           "/createquiz": (context) => CreateQuiz(),
           "/addquestion": (context) => const AddNewQuestion(),
-          "/questions": (context) => Questions(CreateQuiz.allQuestions)
+          "/questions": (context) => Questions()
         },
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',

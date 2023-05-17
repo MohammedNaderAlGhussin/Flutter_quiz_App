@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app_advanced/material_color.dart';
 
 import '../models/quiz_data.dart';
-
 import '../widgets/result_widget.dart';
 
 class Questions extends StatefulWidget {
-  List<Quiz> allQuestions;
-
-  Questions(this.allQuestions);
-
   @override
   State<Questions> createState() => _QuestionsState();
 }
@@ -24,7 +19,7 @@ class _QuestionsState extends State<Questions> {
         title: const Text("Quiz App"),
         centerTitle: true,
       ),
-      body: currentIndex >= widget.allQuestions.length
+      body: currentIndex >= Quiz.allQuestions.length
           ? Result(score)
           : Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -41,20 +36,20 @@ class _QuestionsState extends State<Questions> {
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      " /${widget.allQuestions.length}",
+                      " /${Quiz.allQuestions.length}",
                       style: const TextStyle(fontSize: 20, color: Colors.grey),
                     )
                   ],
                 ),
-                questionBuilder(widget.allQuestions[currentIndex].question),
-                answerBuilder(widget.allQuestions[currentIndex].answer1,
-                    widget.allQuestions[currentIndex].correctAnswer, "A"),
-                answerBuilder(widget.allQuestions[currentIndex].answer2,
-                    widget.allQuestions[currentIndex].correctAnswer, "B"),
-                answerBuilder(widget.allQuestions[currentIndex].answer3,
-                    widget.allQuestions[currentIndex].correctAnswer, "C"),
-                answerBuilder(widget.allQuestions[currentIndex].answer4,
-                    widget.allQuestions[currentIndex].correctAnswer, "D"),
+                questionBuilder(Quiz.allQuestions[currentIndex].question),
+                answerBuilder(Quiz.allQuestions[currentIndex].answer1,
+                    Quiz.allQuestions[currentIndex].correctAnswer, "A"),
+                answerBuilder(Quiz.allQuestions[currentIndex].answer2,
+                    Quiz.allQuestions[currentIndex].correctAnswer, "B"),
+                answerBuilder(Quiz.allQuestions[currentIndex].answer3,
+                    Quiz.allQuestions[currentIndex].correctAnswer, "C"),
+                answerBuilder(Quiz.allQuestions[currentIndex].answer4,
+                    Quiz.allQuestions[currentIndex].correctAnswer, "D"),
               ],
             ),
     );

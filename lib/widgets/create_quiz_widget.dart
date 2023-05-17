@@ -4,10 +4,6 @@ import 'package:quiz_app_advanced/material_color.dart';
 import '../models/quiz_data.dart';
 
 class CreatedQuizWidget extends StatefulWidget {
-  List<Quiz> allQuestions;
-
-  CreatedQuizWidget(this.allQuestions);
-
   @override
   State<CreatedQuizWidget> createState() => _CreatedQuizWidgetState();
 }
@@ -16,13 +12,13 @@ class _CreatedQuizWidgetState extends State<CreatedQuizWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
-        children: widget.allQuestions
+        children: Quiz.allQuestions
             .map((quiz) => questionBuilder(
                   context,
                   quiz.question,
                   [quiz.answer1, quiz.answer2, quiz.answer3, quiz.answer4],
                   quiz.correctAnswer,
-                  widget.allQuestions.indexOf(quiz),
+                  Quiz.allQuestions.indexOf(quiz),
                 ))
             .toList());
   }
@@ -61,8 +57,7 @@ class _CreatedQuizWidgetState extends State<CreatedQuizWidget> {
                             )),
                         TextButton(
                             onPressed: () {
-                              widget.allQuestions
-                                  .remove(widget.allQuestions[id]);
+                              Quiz.allQuestions.remove(Quiz.allQuestions[id]);
                               Navigator.of(context).pop();
                               setState(() {});
                               ScaffoldMessenger.of(context).showSnackBar(
